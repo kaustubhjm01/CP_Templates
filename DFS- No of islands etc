@@ -1,0 +1,35 @@
+int maxi =0;
+    int dfs(vector<vector<int>>& grid, int n,int m,int i,int j){
+        // cout<<i<<" and "<<j<<endl;
+        grid[i][j] =-1;
+        int c=1;
+        for(int i1=-1;i1<=1;i1++){
+            
+            for(int j1=-1;j1<=1;j1++){
+                
+                int newx = i +i1;
+                int newy = j+j1;
+                
+                if(newx>=0 and newx<n and newy>=0 and newy<m and grid[newx][newy]==1)   {
+                // cout<<newx<<" and "<<newy<<endl;    
+                    c+= dfs(grid,n,m,newx,newy)    ;
+                    
+                }
+            }
+        }
+        return c;
+        
+    }
+    int findMaxArea(vector<vector<int>>& grid) {
+        int n = grid.size() , m = grid[0].size() ;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                
+                if(grid[i][j]==1){
+                    // cout<<i<<" and "<<j<<endl;
+                    maxi = max(maxi, dfs(grid,n,m,i,j));
+                }
+            }
+        }
+        return maxi;
+    }
