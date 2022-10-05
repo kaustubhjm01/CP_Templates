@@ -1,0 +1,40 @@
+class Trie {
+public:
+    vector<Trie *> v;
+    bool islast ;
+    Trie(){
+        v.resize(26,NULL);
+        islast = false;        
+    }
+    
+    void insert(string word) {
+        Trie * root = this;
+        for(auto c: word){
+            if(root->v[c-'a'] == NULL)
+                root->v[c-'a'] =  new Trie();
+            root= root->v[c-'a'];
+        }
+        root->islast = true;
+    }
+    
+    bool search(string word) {
+        Trie *root= this;
+        for(auto c: word){
+            if(root->v[c-'a'] == NULL)
+                return false;
+            root= root->v[c-'a'];
+        }
+        if(root->islast == true)return true;
+        return false;
+    }
+    
+    bool startsWith(string prefix) {
+        Trie *root= this;
+        for(auto c: prefix){
+            if(root->v[c-'a'] == NULL)
+                return false;
+            root= root->v[c-'a'];
+        }
+        return true;
+    }
+};
